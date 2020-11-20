@@ -9,7 +9,7 @@
 
 # dependencies
 /backend/node_modules
-/frontend/plantify-frontend/node_modules
+/plantify-frontend/node_modules
 
 # profiling files
 chrome-profiler-events.json
