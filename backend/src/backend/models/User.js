@@ -28,10 +28,10 @@ const userSchema = new mongoose.Schema(
     //   default: "user",
     //   enum: ["user", "admin", "superadmin"]
     // },
-    username: {
-      type: String,
-      required: true
-    },
+    // username: {
+    //   type: String,
+    //   required: true
+    // },
     password: {
       type: String,
       required: true
@@ -76,7 +76,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this
-  const token = jwt.sign({ _id: user._id.toString() }, SECRET)
+  const token = jwt.sign({ _id: user._id.toString() }, SECRET, { expiresIn: "1800s" })
   user.tokens = user.tokens.concat({ token })
   await user.save()
 
@@ -104,4 +104,5 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
+module.exports = User
