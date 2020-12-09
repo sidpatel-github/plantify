@@ -36,7 +36,14 @@
                 (0)</small></a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/auth"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login</a>
+
+            <a *ngIf="!isAuthenticated;else content" class="nav-link" routerLink="/auth"> <i
+                class="fas fa-user-alt mr-1 text-gray"></i>Login</a>
+            <ng-template #content> <a class="nav-link" routerLink="/"> <i
+                  class="fas fa-user-alt mr-1 text-gray"></i>welcome {{email}}</a>
+              <a class="nav-link" style="cursor: pointer;" (click)="onLogout()"> Logout</a>
+            </ng-template>
+
           </li>
         </ul>
       </div>
