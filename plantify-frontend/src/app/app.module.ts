@@ -13,6 +13,14 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { AuthComponent } from './auth/auth.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { PlantsComponent } from './plants/plants.component';
+import { PlantListComponent } from './plants/plant-list/plant-list.component';
+import { PlantListFilterComponent } from './plants/plant-list-filter/plant-list-filter.component';
+import { ApolloModule, Apollo } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+
+// import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   declarations: [
@@ -24,16 +32,29 @@ import { HttpClientModule } from '@angular/common/http';
     TrendingProductsComponent,
     ServicesComponent,
     MainPageComponent,
-    AuthComponent
+    AuthComponent,
+    PlantsComponent,
+    PlantListComponent,
+    PlantListFilterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule
+    // // ,
+    // GraphQLModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(apollo: Apollo, httpLink: HttpLink) {
+    apollo.create({
+      link: httpLink.create({uri: 'http://localhost:4200/graphql'}),
+      cache: new InMemoryCache()
+    });
+  }
+ }

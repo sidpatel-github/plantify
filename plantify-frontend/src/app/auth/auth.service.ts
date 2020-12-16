@@ -28,7 +28,7 @@ export class AuthService {
   signup(name: string, email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        '/users',
+        '/api/users',
         {
           email,
           password,
