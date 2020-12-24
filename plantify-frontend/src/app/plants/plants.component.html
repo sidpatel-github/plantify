@@ -23,9 +23,12 @@
         <div class="col-lg-3 order-2 order-lg-1">
           <app-plant-list-filter></app-plant-list-filter>
         </div>
+        <div class="col-lg-3 order-2 order-lg-1" *ngIf="loadedPlants.length == 0 && isFetching">
+          <h1>Hey there</h1>
+        </div>
 
-        <div class="col-lg-9 order-1 order-lg-2 mb-5 mb-lg-0">
-          <app-plant-list> [loadedPlants]</app-plant-list>
+        <div class="col-lg-9 order-1 order-lg-2 mb-5 mb-lg-0" *ngIf="loadedPlants.length >= 1 && !isFetching">
+          <app-plant-list [loadedPlants] = loadedPlants> </app-plant-list>
         </div>
       </div>
     </div>

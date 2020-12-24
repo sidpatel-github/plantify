@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Plant } from '../plant.model';
 import { PlantsService } from '../plants.service';
 
@@ -10,15 +11,17 @@ import { PlantsService } from '../plants.service';
 })
 export class PlantsComponent implements OnInit {
   loadedPlants: Plant[] = [];
+  isFetching = false;
+  private subscription: Subscription;
 
   constructor(private http: HttpClient,
     private plantService: PlantsService
   ) { }
 
   ngOnInit() {
-    console.log("plants loaded");
-    this.plantService.fetchPosts().subscribe(plants => {
-      // this.isFetching = false;
+    this.isFetching = true;
+    this.plantService.fetchPlants(1).subscribe( plants => {
+      this.isFetching = false;
       this.loadedPlants = plants;
     }
       // , error => {
@@ -27,7 +30,12 @@ export class PlantsComponent implements OnInit {
       // }
     );
 
-    console.log("loaded plants after init = " + this.loadedPlants);
+    this.subscription = this.plantService.plantsChanged
+      .subscribe(
+        (plants: Plant[]) => {
+          this.loadedPlants = plants;
+          // console.log('******** inside subscription ********' + this.loadedPlants)
+        }
+      );
   }
-
 }

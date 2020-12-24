@@ -5,7 +5,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
 import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
-
+import { PlantQueries } from './graphql/plant-queries';
 
 const PLANTS_QUERY = gql`
 query {
@@ -13,7 +13,9 @@ query {
     data {
       id
       slug
-      genus_id
+      genus_id,
+      image_url,
+      common_name
     }
   }
 }
@@ -22,10 +24,10 @@ query {
 @Injectable({ providedIn: 'root' })
 export class PlantsService {
   error = new Subject<string>();
-  loadedPlants: Plant[] = [];
-  private query: QueryRef<any>;
+  plantsChanged = new Subject<Plant[]>();
+  // private plants: Plant[] = [];
 
-  constructor(private http: HttpClient, private apollo: Apollo) { }
+  constructor(private http: HttpClient, private apollo: Apollo, private plantQueries: PlantQueries) { }
 
   // createAndStorePost(title: string, content: string) {
   //   const postData: Post = {
@@ -46,19 +48,18 @@ export class PlantsService {
   //     });
   // }
 
-  fetchPosts() {
-    console.log("fetch");
-
-    return this.apollo.watchQuery({
-      query: PLANTS_QUERY
+  fetchPlants(page: number) {
+    return this.apollo.watchQuery<[Plant]>({
+      query: this.plantQueries.getPlants(),
+      variables: { page: page },
     }).valueChanges.pipe(map(result => {
-      // const plantsArray: Plant[] = [];
+      const loadedplantsArray: Plant[] = [];
       const tempRes = result['data']['plants']['data'];
       for (const key in tempRes) {
-        // console.log("==== key ====");
-        this.loadedPlants.push({ ...tempRes[key] });
+        loadedplantsArray.push({ ...tempRes[key] });
       }
-      return this.loadedPlants;
+      this.plantsChanged.next(loadedplantsArray);
+      return loadedplantsArray;
     }));
     // .subscribe(result => {
     //   console.log("==== result ====");
@@ -85,4 +86,5 @@ export class PlantsService {
   //       // console.log(event);
   //     }));
   // }
+
 }

@@ -4,7 +4,6 @@ const auth = require('../middleware/auth')
 
 router.get('/plants', async (req, res) => {
 
-   
 })
 
 
