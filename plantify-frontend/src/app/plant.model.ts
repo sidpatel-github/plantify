@@ -4,4 +4,5 @@ export interface Plant {
   image_url: string;
   common_name: string;
   id?: string;
+  images?: string[]
 }

@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLList, GraphQLInt } = graphql
 
-const DataType = new GraphQLObjectType({
+const Data = new GraphQLObjectType({
     name: 'Data',
     fields: () => ({
         id: { type: GraphQLID },
@@ -11,41 +11,66 @@ const DataType = new GraphQLObjectType({
         common_name: { type: GraphQLString },
         genus_id: { type: GraphQLString },
         observations: { type: GraphQLString },
-        image_url: { type: GraphQLString }
+        image_url: { type: GraphQLString },
+        main_species: { type: MainSpecies }
     })
 })
 
-const TotalType = new GraphQLObjectType({
+const Total = new GraphQLObjectType({
     name: 'Total',
     fields: () => ({
         total: { type: GraphQLString }
     })
 })
 
-const PlantType = new GraphQLObjectType({
+
+const MainSpecies = new GraphQLObjectType({
+    name: 'MainSpecies',
+    fields: () => ({
+        images: { type: MainSpeciesImages }
+    })
+})
+
+const MainSpeciesImages = new GraphQLObjectType({
+    name: 'MainSpeciesImages',
+    fields: () => ({
+        fruit: { type: new GraphQLList(Image) },
+        habit: { type: new GraphQLList(Image) },
+        leaf: { type: new GraphQLList(Image) },
+        flower: { type: new GraphQLList(Image) }
+    })
+})
+const Image = new GraphQLObjectType({
+    name: 'Images',
+    fields: () => ({
+        image_url: { type: GraphQLString }
+    })
+})
+
+const Plant = new GraphQLObjectType({
     name: 'Plant',
     description: 'plant details',
     fields: () => ({
         data: {
-            type: DataType
+            type: Data
         }
         // ,
         // meta: {
-        //     type: TotalType
+        //     type: Total
         // }
     })
 })
 
-const PlantListType = new GraphQLObjectType({
+const PlantList = new GraphQLObjectType({
     name: 'PlantList',
     description: 'plant details',
     fields: () => ({
         data: {
-            type: new GraphQLList(DataType),
+            type: new GraphQLList(Data),
         }
         ,
         meta: {
-            type: TotalType
+            type: Total
         }
     })
 })
@@ -54,7 +79,7 @@ const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
         plant: {
-            type: PlantType,
+            type: Plant,
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
                 const body = get_data("https://trefle.io/api/v1/plants/" + args.id + "/?token=udvvyZTueX-fvahlrHK-JQVuOuBqZISY7euTvx2eooc")
@@ -62,7 +87,7 @@ const RootQuery = new GraphQLObjectType({
             }
         },
         plants: {
-            type: PlantListType,
+            type: PlantList,
             args: { page: { type: GraphQLInt } },
             resolve(parent, args) {
                 console.log('******************' + args.page);

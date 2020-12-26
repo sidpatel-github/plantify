@@ -25,6 +25,8 @@ query {
 export class PlantsService {
   error = new Subject<string>();
   plantsChanged = new Subject<Plant[]>();
+  plantChanged = new Subject<Plant>();
+
   // private plants: Plant[] = [];
 
   constructor(private http: HttpClient, private apollo: Apollo, private plantQueries: PlantQueries) { }
@@ -65,6 +67,27 @@ export class PlantsService {
     //   console.log("==== result ====");
     //   console.log(result);
     // });
+  }
+
+  fetchPlant(id: number) {
+    return this.apollo.watchQuery<Plant>({
+      query: this.plantQueries.getPlant(),
+      variables: { id: id },
+    }).valueChanges.pipe(map(result => {
+      let loadedplant: Plant;
+      const tempRes = result['data']['plant']['data'];
+      loadedplant = { ...tempRes };
+      const responseImages = tempRes['main_species']['images'];
+      console.log('================')
+      console.log(responseImages)
+      loadedplant.images = [];
+      loadedplant.images.push(responseImages.flower[0].image_url)
+      loadedplant.images.push(responseImages.fruit[0].image_url)
+      loadedplant.images.push(responseImages.leaf[0].image_url)
+      loadedplant.images.push(responseImages.habit[0].image_url)
+      this.plantChanged.next(loadedplant);
+      return loadedplant;
+    }));
   }
 
   // deletePosts() {

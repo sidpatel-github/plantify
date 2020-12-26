@@ -20,4 +20,28 @@ export class PlantQueries {
         `;
   }
 
+  getPlant() {
+    return gql`
+          query($id: ID!) {
+            plant(id:$id) {
+              data {
+                id
+                slug
+                genus_id,
+                image_url,
+                common_name,
+                main_species{
+                  images{
+                    fruit { image_url },
+                    habit { image_url },
+                    leaf { image_url },
+                    flower { image_url },
+                  }
+                }
+              }
+            }
+          }
+        `;
+  }
+
 }

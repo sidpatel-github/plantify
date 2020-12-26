@@ -27,7 +27,7 @@
   <div class="col-lg-4 col-sm-6" *ngFor="let plant of loadedPlants">
     <div class="product text-center">
       <div class="mb-3 position-relative">
-        <div class="badge text-white badge-"></div><a class="d-block" href="detail.html"><img class="img-fluid w-100"
+        <div class="badge text-white badge-"></div><a class="d-block" routerLink="/plant-detail/{{plant.id}}"><img class="img-fluid w-100"
             src={{plant.image_url}} alt="..."></a>
         <div class="product-overlay">
           <ul class="mb-0 list-inline">

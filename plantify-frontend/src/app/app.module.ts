@@ -19,6 +19,7 @@ import { PlantListFilterComponent } from './plants/plant-list-filter/plant-list-
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { PlantDetailsComponent } from './plants/plant-list/plant-details/plant-details.component';
 
 // import { GraphQLModule } from './graphql.module';
 
@@ -35,7 +36,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
     AuthComponent,
     PlantsComponent,
     PlantListComponent,
-    PlantListFilterComponent
+    PlantListFilterComponent,
+    PlantDetailsComponent
   ],
   imports: [
     BrowserModule,
