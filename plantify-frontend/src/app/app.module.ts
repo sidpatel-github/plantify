@@ -20,6 +20,9 @@ import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { PlantDetailsComponent } from './plants/plant-list/plant-details/plant-details.component';
+import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 // import { GraphQLModule } from './graphql.module';
 
@@ -37,7 +40,10 @@ import { PlantDetailsComponent } from './plants/plant-list/plant-details/plant-d
     PlantsComponent,
     PlantListComponent,
     PlantListFilterComponent,
-    PlantDetailsComponent
+    PlantDetailsComponent,
+    CartComponent,
+    CheckoutComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,8 @@
 <!--  Modal -->
-<div class="modal fade" id="productView" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- <div class="modal fade" id="productView" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-body p-0">
+       <div class="modal-body p-0">
         <div class="row align-items-stretch">
           <div class="col-lg-6 p-lg-0"><a class="product-view d-block h-100 bg-cover bg-center"
               style="background: url(img/product-5.jpg)" href="img/product-5.jpg" data-lightbox="productview"
@@ -48,7 +48,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <section class="py-5">
   <div class="container">
     <div class="row mb-5">
@@ -95,21 +95,28 @@
         <p class="text-small mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut ullamcorper leo, eget
           euismod orci. Cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus. Vestibulum
           ultricies aliquam convallis.</p>
-        <div class="row align-items-stretch mb-4">
-          <div class="col-sm-5 pr-sm-0">
-            <div class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white"><span
-                class="small text-uppercase text-gray mr-4 no-select">Quantity</span>
-              <div class="quantity">
-                <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
-                <input class="form-control border-0 shadow-0 p-0" type="text" value="1">
-                <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
+        <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+          <div class="row align-items-stretch mb-4">
+            <div class="col-sm-5 pr-sm-0">
+              <div class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white">
+                <span class="small text-uppercase text-gray mr-4 no-select">Quantity</span>
+                <div class="quantity">
+                  <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
+                  <input class="form-control border-0 shadow-0 p-0" type="text" value="1" name="quantity" ngModel
+                    required pattern="^[1-9]+[0-9]*$">
+                  <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
+                </div>
               </div>
             </div>
+            <div class="col-sm-3 pl-sm-0">
+              <!-- <a class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0"
+                (click)="onAddCart()">Add to cart</a> -->
+              <button class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0"
+                type="submit">Add to cart</button>
+            </div>
           </div>
-          <div class="col-sm-3 pl-sm-0"><a
-              class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0"
-              href="cart.html">Add to cart</a></div>
-        </div><a class="btn btn-link text-dark p-0 mb-4" href="#"><i class="far fa-heart mr-2"></i>Add to wish
+        </form>
+        <a class="btn btn-link text-dark p-0 mb-4" href="#"><i class="far fa-heart mr-2"></i>Add to wish
           list</a><br>
         <ul class="list-unstyled small d-inline-block">
           <li class="px-3 py-2 mb-1 bg-white"><strong class="text-uppercase">SKU:</strong><span
@@ -178,3 +185,5 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
