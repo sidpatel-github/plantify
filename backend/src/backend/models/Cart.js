@@ -7,6 +7,14 @@ const taskSchema = new mongoose.Schema({
             type: Number,
             required: true
         },
+        name: {
+            type: String,
+            require: true
+        },
+        imageURL: {
+            type: String,
+            require: true
+        },
         amount: {
             type: Number,
             require: true

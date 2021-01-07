@@ -81,10 +81,19 @@ export class PlantsService {
       console.log('================')
       console.log(responseImages)
       loadedplant.images = [];
-      loadedplant.images.push(responseImages.flower[0].image_url)
-      loadedplant.images.push(responseImages.fruit[0].image_url)
-      loadedplant.images.push(responseImages.leaf[0].image_url)
-      loadedplant.images.push(responseImages.habit[0].image_url)
+      loadedplant.images.push(loadedplant.image_url)
+      if (responseImages.leaf != null) {
+        loadedplant.images.push(responseImages.leaf[0].image_url)
+      }
+      if (responseImages.flower != null) {
+        loadedplant.images.push(responseImages.flower[0].image_url)
+      }
+      if (responseImages.fruit != null) {
+        loadedplant.images.push(responseImages.fruit[0].image_url)
+      }
+      if (responseImages.habit != null) {
+        loadedplant.images.push(responseImages.habit[0].image_url)
+      }
       this.plantChanged.next(loadedplant);
       return loadedplant;
     }));

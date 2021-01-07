@@ -15,7 +15,6 @@ import { Cart } from 'src/app/shared/cart.model';
 export class PlantDetailsComponent implements OnInit {
   @Input('loadedPlants') loadedPlant: Plant;
   @ViewChild('f') cartForm: NgForm;
-  private subscription: Subscription;
 
   constructor(private route: ActivatedRoute,
     private plantService: PlantsService,
@@ -23,14 +22,12 @@ export class PlantDetailsComponent implements OnInit {
 
   ngOnInit() {
     let id = this.route.snapshot.params['id'];
-    console.log('id' + id)
-
 
     this.plantService.fetchPlant(id).subscribe(plant => {
       this.loadedPlant = plant;
     });
 
-    this.subscription = this.plantService.plantChanged
+    this.plantService.plantChanged
       .subscribe(
         (plant: Plant) => {
           this.loadedPlant = plant;

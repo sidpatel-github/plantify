@@ -12,7 +12,7 @@ import { ServicesComponent } from './services/services.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { AuthComponent } from './auth/auth.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PlantsComponent } from './plants/plants.component';
 import { PlantListComponent } from './plants/plant-list/plant-list.component';
 import { PlantListFilterComponent } from './plants/plant-list-filter/plant-list-filter.component';
@@ -23,6 +23,8 @@ import { PlantDetailsComponent } from './plants/plant-list/plant-details/plant-d
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 // import { GraphQLModule } from './graphql.module';
 
@@ -43,7 +45,8 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     PlantDetailsComponent,
     CartComponent,
     CheckoutComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -55,14 +58,18 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     // // ,
     // GraphQLModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(apollo: Apollo, httpLink: HttpLink) {
     apollo.create({
-      link: httpLink.create({uri: 'http://localhost:4200/graphql'}),
+      link: httpLink.create({ uri: 'http://localhost:4200/graphql' }),
       cache: new InMemoryCache()
     });
   }
- }
+}
