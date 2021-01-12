@@ -15,6 +15,35 @@ import { Cart } from 'src/app/shared/cart.model';
 export class PlantDetailsComponent implements OnInit {
   @Input('loadedPlants') loadedPlant: Plant;
   @ViewChild('f') cartForm: NgForm;
+  isLoading = false;
+
+  // customOptions: OwlOptions = {
+  //   loop: true,
+  //   mouseDrag: true,
+  //   touchDrag: false,
+  //   pullDrag: false,
+  //   dots: false,
+  //   navSpeed: 700,
+  //   autoWidth: true,
+  //   autoHeight: true,
+  //   // merge: false,
+  //   navText: ['Previous', 'Next'],
+  //   responsive: {
+  //     0: {
+  //       items: 1
+  //     },
+  //     400: {
+  //       items: 2
+  //     },
+  //     740: {
+  //       items: 3
+  //     },
+  //     940: {
+  //       items: 4
+  //     }
+  //   },
+  //   nav: true
+  // }
 
   constructor(private route: ActivatedRoute,
     private plantService: PlantsService,
@@ -22,6 +51,8 @@ export class PlantDetailsComponent implements OnInit {
 
   ngOnInit() {
     let id = this.route.snapshot.params['id'];
+
+    this.isLoading = true;
 
     this.plantService.fetchPlant(id).subscribe(plant => {
       this.loadedPlant = plant;
@@ -31,6 +62,7 @@ export class PlantDetailsComponent implements OnInit {
       .subscribe(
         (plant: Plant) => {
           this.loadedPlant = plant;
+          this.isLoading = false;
           console.log('******** inside subscription ********')
           console.log(this.loadedPlant)
         }

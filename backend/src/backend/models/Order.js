@@ -1,7 +1,35 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-const taskSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    phoneNo: {
+        type: Number,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
     amount: {
         type: Number,
         required: true
@@ -24,12 +52,12 @@ const taskSchema = new mongoose.Schema({
     timestamps: true
 })
 
-userSchema.virtual('orders', {
-    ref: 'Order',
-    localField: '_id',
-    foreignField: 'ordermapping'
-})
+// userSchema.virtual('orders', {
+//     ref: 'Order',
+//     localField: '_id',
+//     foreignField: 'ordermapping'
+// })
 
-const Plant = mongoose.model('Order', taskSchema)
+const Order = mongoose.model('Order', orderSchema)
 
-module.exports = Plant
+module.exports = Order

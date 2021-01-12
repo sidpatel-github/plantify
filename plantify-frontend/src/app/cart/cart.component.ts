@@ -9,11 +9,14 @@ import { Cart } from '../shared/cart.model';
 })
 export class CartComponent implements OnInit {
   loadedCart: Cart[] = [];
+  total: number
 
   constructor(private cartService: CartService) { }
 
   ngOnInit() {
     this.loadedCart = this.cartService.getCartItems();
+    this.total = this.cartService.getCartTotal();
+
     console.log('=========loadedCart=============')
     console.log(this.loadedCart)
 
@@ -21,6 +24,7 @@ export class CartComponent implements OnInit {
       .subscribe(
         (cart: Cart[]) => {
           this.loadedCart = cart;
+          this.total = this.cartService.getCartTotal();
         }
       );
   }

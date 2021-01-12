@@ -10,6 +10,20 @@ export class CartService {
   private cart: Cart[] = [];
   cartChanged = new Subject<Cart[]>();
 
+  constructor() {
+    const cartData: Cart[] = JSON.parse(localStorage.getItem('cartData'));
+    console.log('cart constructor called');
+    if (!cartData) {
+      console.log('empty cart');
+      return;
+    }
+    console.log('fille cart');
+    this.cart = cartData
+    this.cartChanged.next(this.cart.slice());
+
+    console.log(this.cart);
+  }
+
   getCartItems() {
     return this.cart.slice();
   }
@@ -19,13 +33,15 @@ export class CartService {
   }
 
   addCartItem(cart: Cart) {
-
     const existingCartItemIndex = this.doesCartContains(cart.plantId);
     if (existingCartItemIndex === -1) {
+      console.log("match found!!!")
       this.cart.push(cart);
     } else {
+      console.log("match not found!!!")
       this.cart[existingCartItemIndex] = cart;
     }
+    localStorage.setItem('cartData', JSON.stringify(this.cart.slice()));
     this.cartChanged.next(this.cart.slice());
   }
 
@@ -47,7 +63,20 @@ export class CartService {
     this.cartChanged.next(this.cart.slice());
   }
 
+  emptyCart() {
+    this.cart = [];
+    this.cartChanged.next(this.cart.slice());
+  }
+
   doesCartContains(id: string) {
     return this.cart.findIndex(plant => plant.plantId === id);
+  }
+
+  getCartTotal() {
+    let total: number = 0;
+    this.cart.forEach(cart => {
+      total += (cart.amount * cart.quantity)
+    });
+    return total;
   }
 }

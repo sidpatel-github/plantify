@@ -20,10 +20,12 @@ app.use(express.json())
 const userRoute = require('./src/backend/routers/user')
 const plantRoute = require('./src/backend/routers/plant')
 const cartRoute = require('./src/backend/routers/cart')
+const orderRoute = require('./src/backend/routers/order')
 
 app.use(userRoute)
 app.use(plantRoute)
 app.use(cartRoute)
+app.use(orderRoute)
 
 // ***********************************************************************************************
 app.listen(port, () => {

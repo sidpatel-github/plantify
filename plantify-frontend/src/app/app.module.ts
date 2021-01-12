@@ -25,6 +25,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { Ng5SliderModule } from 'ng5-slider';
 
 // import { GraphQLModule } from './graphql.module';
 
@@ -54,8 +55,8 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     FormsModule,
     HttpClientModule,
     ApolloModule,
-    HttpLinkModule
-    // // ,
+    HttpLinkModule,
+    Ng5SliderModule
     // GraphQLModule
   ],
   providers: [{

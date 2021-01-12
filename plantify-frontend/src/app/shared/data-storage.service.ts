@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, tap, take, exhaustMap } from 'rxjs/operators';
+import { map, tap, take, exhaustMap, catchError } from 'rxjs/operators';
 
 import { Cart } from './cart.model';
 import { AuthService } from '../auth/auth.service';
 import { CartService } from '../cart.service';
+import { Order } from './order.model';
+import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DataStorageService {
@@ -17,36 +19,30 @@ export class DataStorageService {
   storeCart() {
     const cart = this.cartService.getCartItems();
     var items = { items: cart };
-
-
     console.log(items);
-    this.http
+    return this.http
       .post(
         '/api/cart',
         items
+      ).pipe(
+        catchError((err) => {
+          console.log('error caught in storing cart')
+          return throwError(err);
+        })
       )
-      .subscribe(response => {
-        console.log(response);
-      });
   }
 
-  // fetchRecipes() {
-  //   return this.http
-  //     .get<Cart[]>(
-  //       'https://ng-course-recipe-book-65f10.firebaseio.com/recipes.json'
-  //     )
-  //     .pipe(
-  //       map(recipes => {
-  //         return recipes.map(recipe => {
-  //           return {
-  //             ...recipe,
-  //             ingredients: recipe.ingredients ? recipe.ingredients : []
-  //           };
-  //         });
-  //       }),
-  //       tap(recipes => {
-  //         this.recipeService.setRecipes(recipes);
-  //       })
-  //     );
-  // }
+  placeOrder(order: Order) {
+    console.log(order);
+    return this.http
+      .post<Order>(
+        '/api/order',
+        order
+      ).pipe(
+        catchError((err) => {
+          console.log('error caught in checkout')
+          return throwError(err);
+        })
+      )
+  }
 }

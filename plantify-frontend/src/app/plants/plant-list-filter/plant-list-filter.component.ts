@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Ng5SliderModule } from 'ng5-slider';
 
 @Component({
   selector: 'app-plant-list-filter',

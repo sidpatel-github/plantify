@@ -50,7 +50,10 @@
   </div>
 </div> -->
 <section class="py-5">
-  <div class="container">
+  <div *ngIf="isLoading" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <div class="container" *ngIf="!isLoading">
     <div class="row mb-5">
       <div class="col-lg-6">
         <!-- PRODUCT SLIDER-->
@@ -69,16 +72,26 @@
             </div>
           </div>
           <div class="col-sm-10 order-1 order-sm-2">
+            <!-- <owl-carousel-o [options]="customOptions">
+              <ng-template carouselSlide *ngFor="let plant_image of loadedPlant.images">
+                <img class="img-fluid w-100" src="{{plant_image}}" alt="...">
+              </ng-template>
+            </owl-carousel-o> -->
+
             <div class="owl-carousel product-slider" data-slider-id="1">
-              <a class="d-block" href="{{plant_image}}" data-lightbox="product" title="Product item 1" *ngFor="let plant_image of loadedPlant.images">
-                <img class="img-fluid" src="{{plant_image}}" alt="..."></a>
-              <!-- <a class="d-block" href="{{loadedPlant.images[0]}}" data-lightbox="product" title="Product item 2"><img
+              <a class="d-block" href="{{plant_image1}}" data-lightbox="product" title="Product item 1"
+                *ngFor="let plant_image1 of loadedPlant.images">
+                <img class="img-fluid" src="{{plant_image1}}" alt="...">
+              </a>
+            </div>
+
+
+            <!-- <a class="d-block" href="{{loadedPlant.images[0]}}" data-lightbox="product" title="Product item 2"><img
                   class="img-fluid" src="{{loadedPlant.images[0]}}" alt="..."></a>
               <a class="d-block" href="{{loadedPlant.images[1]}}" data-lightbox="product" title="Product item 3"><img
                   class="img-fluid" src="{{loadedPlant.images[1]}}" alt="..."></a>
               <a class="d-block" href="{{loadedPlant.images[2]}}" data-lightbox="product" title="Product item 4"><img
                   class="img-fluid" src="{{loadedPlant.images[2]}}" alt="..."></a> -->
-            </div>
           </div>
         </div>
       </div>
@@ -151,7 +164,8 @@
         <div class="p-4 p-lg-5 bg-white">
           <div class="row">
             <div class="col-lg-8">
-              <div class="media mb-3"><img class="rounded-circle" src="../../../../assets/img/customer-1.png" alt="" width="50">
+              <div class="media mb-3"><img class="rounded-circle" src="../../../../assets/img/customer-1.png" alt=""
+                  width="50">
                 <div class="media-body ml-3">
                   <h6 class="mb-0 text-uppercase">Jason Doe</h6>
                   <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
@@ -166,7 +180,8 @@
                     eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </div>
               </div>
-              <div class="media"><img class="rounded-circle" src="../../../../assets/img/customer-1.png" alt="" width="50">
+              <div class="media"><img class="rounded-circle" src="../../../../assets/img/customer-1.png" alt=""
+                  width="50">
                 <div class="media-body ml-3">
                   <h6 class="mb-0 text-uppercase">Jason Doe</h6>
                   <p class="small text-muted mb-0 text-uppercase">20 May 2020</p>
