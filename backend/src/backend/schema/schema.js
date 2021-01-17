@@ -99,6 +99,24 @@ const RootQuery = new GraphQLObjectType({
                 const body = get_data(url)
                 return body
             }
+        },
+        genus: {
+            type: PlantList,
+            resolve(parent, args) {
+                var url = "https://trefle.io/api/v1/genus/?token=udvvyZTueX-fvahlrHK-JQVuOuBqZISY7euTvx2eooc&order[id]=asc";
+                console.log(url)
+                const body = get_data(url)
+                return body
+            }
+        },
+        gnusPlants: {
+            type: PlantList,
+            args: { gnusId: { type: GraphQLID } },
+            resolve(parent, args) {
+                var url = "https://trefle.io/api/v1/genus/" + args.gnusId + "/plants/?token=udvvyZTueX-fvahlrHK-JQVuOuBqZISY7euTvx2eooc";
+                const body = get_data(url)
+                return body
+            }
         }
     },
 })

@@ -5,13 +5,27 @@
     <h2 class="h5 text-uppercase mb-4">Browse our categories</h2>
   </header>
   <div class="row">
-    <div class="col-md-4 mb-4 mb-md-0"><a class="category-item" href="shop.html"><img class="img-fluid"
-          src="../../assets/img/cat-img-1.jpg" alt=""><strong class="category-item-title">Families</strong></a></div>
-    <div class="col-md-4 mb-4 mb-md-0"><a class="category-item mb-4" href="shop.html"><img class="img-fluid"
-          src="../../assets/img/cat-img-2.jpg" alt=""><strong class="category-item-title">Genus</strong></a><a
-        class="category-item" href="shop.html"><img class="img-fluid" src="../../assets/img/cat-img-3.jpg"
-          alt=""><strong class="category-item-title">Species</strong></a></div>
-    <div class="col-md-4"><a class="category-item" href="shop.html"><img class="img-fluid"
-          src="../../assets/img/cat-img-4.jpg" alt=""><strong class="category-item-title">Distribution</strong></a></div>
+    <div class="col-md-4 mb-4 mb-md-0">
+      <a class="category-item" [routerLink]="['category', 'species']">
+        <img class="img-fluid" src="../../assets/img/species.jpg" alt="">
+        <strong class="category-item-title">Species</strong>
+      </a>
+    </div>
+    <div class="col-md-4 mb-4 mb-md-0">
+      <a class="category-item mb-4" [routerLink]="['category', 'genus']">
+        <img class="img-fluid" src="../../assets/img/genus.jpg" alt=""><strong
+          class="category-item-title">Genus</strong>
+      </a>
+      <a class="category-item" [routerLink]="['category', 'families']">
+        <img class="img-fluid" src="../../assets/img/families.jpg" alt=""><strong
+          class="category-item-title">Families</strong>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="category-item" [routerLink]="['category', 'distribution']">
+        <img class="img-fluid" src="../../assets/img/distribution.jpg" alt=""><strong
+          class="category-item-title">Distribution</strong>
+      </a>
+    </div>
   </div>
 </section>

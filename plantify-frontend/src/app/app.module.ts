@@ -25,8 +25,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-import { Ng5SliderModule } from 'ng5-slider';
-
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { CategoryTilesComponent } from './browse-categories/category-tiles/category-tiles.component';
 // import { GraphQLModule } from './graphql.module';
 
 @NgModule({
@@ -47,6 +47,7 @@ import { Ng5SliderModule } from 'ng5-slider';
     CartComponent,
     CheckoutComponent,
     LoadingSpinnerComponent,
+    CategoryTilesComponent,
     PageNotFoundComponent
   ],
   imports: [
@@ -56,7 +57,7 @@ import { Ng5SliderModule } from 'ng5-slider';
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
-    Ng5SliderModule
+    NgxSliderModule
     // GraphQLModule
   ],
   providers: [{
