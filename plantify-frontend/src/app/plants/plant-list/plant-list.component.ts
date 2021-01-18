@@ -23,15 +23,13 @@ export class PlantListComponent implements OnInit {
   ngOnInit() {
   }
 
-  onPaginatioin(pageNum: number) {
+  onPagination(pageNum: number) {
     this.isFetching = true;
 
     this.plantService.fetchPlants(pageNum).subscribe(plants => {
       this.isFetching = false;
-      console.log('*******HEY********' + plants[1].common_name)
       this.loadedPlants = plants;
     });
-    // console.log(pageNum);
   }
 
   onAddCart(plant: Plant) {

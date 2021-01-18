@@ -17,7 +17,7 @@ export class CartService {
       console.log('empty cart');
       return;
     }
-    console.log('fille cart');
+    console.log('filled cart');
     this.cart = cartData
     this.cartChanged.next(this.cart.slice());
 

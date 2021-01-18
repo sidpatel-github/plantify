@@ -100,20 +100,31 @@ const RootQuery = new GraphQLObjectType({
                 return body
             }
         },
-        genus: {
+        category: {
             type: PlantList,
+            args: { categoryType: { type: GraphQLString } },
             resolve(parent, args) {
-                var url = "https://trefle.io/api/v1/genus/?token=udvvyZTueX-fvahlrHK-JQVuOuBqZISY7euTvx2eooc&order[id]=asc";
+                var url = ''
+                if (args.categoryType === 'genus') {
+                    url = "https://trefle.io/api/v1/genus/?token=udvvyZTueX-fvahlrHK-JQVuOuBqZISY7euTvx2eooc&order[id]=asc";
+                }
                 console.log(url)
                 const body = get_data(url)
                 return body
             }
         },
-        gnusPlants: {
+        categoryPlants: {
             type: PlantList,
-            args: { gnusId: { type: GraphQLID } },
+            args: {
+                categoryType: { type: GraphQLString },
+                id: { type: GraphQLID }
+            },
             resolve(parent, args) {
-                var url = "https://trefle.io/api/v1/genus/" + args.gnusId + "/plants/?token=udvvyZTueX-fvahlrHK-JQVuOuBqZISY7euTvx2eooc";
+                var url = ''
+                if (args.categoryType === 'genus') {
+                    url = "https://trefle.io/api/v1/genus/" + args.id + "/plants/?token=udvvyZTueX-fvahlrHK-JQVuOuBqZISY7euTvx2eooc";
+                }
+
                 const body = get_data(url)
                 return body
             }

@@ -6,30 +6,9 @@ import { Subject, throwError } from 'rxjs';
 import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { PlantQueries } from './graphql/plant-queries';
+import { CategoryQueries } from './graphql/category-queries';
+import { Category } from './shared/category.model';
 
-const PLANTS_QUERY = gql`
-query {
-  plants {
-    data {
-      id
-      slug
-      genus_id,
-      image_url,
-      common_name
-    }
-  }
-}
-`;
-
-const GENUS_QUERY = gql`
-query {
-  genus {
-    data {
-      id
-    }
-  }
-}
-`;
 
 @Injectable({ providedIn: 'root' })
 export class PlantsService {
@@ -39,7 +18,10 @@ export class PlantsService {
 
   // private plants: Plant[] = [];
 
-  constructor(private http: HttpClient, private apollo: Apollo, private plantQueries: PlantQueries) { }
+  constructor(private http: HttpClient, private apollo: Apollo
+    , private plantQueries: PlantQueries,
+    private categoryQueries: CategoryQueries,
+  ) { }
 
   fetchPlants(page: number) {
     return this.apollo.watchQuery<[Plant]>({
@@ -65,8 +47,8 @@ export class PlantsService {
       const tempRes = result['data']['plant']['data'];
       loadedplant = { ...tempRes };
       const responseImages = tempRes['main_species']['images'];
-      console.log('================')
-      console.log(responseImages)
+      // console.log('================')
+      // console.log(responseImages)
       loadedplant.images = [];
       loadedplant.images.push(loadedplant.image_url)
       if (responseImages.leaf != null) {
@@ -86,6 +68,37 @@ export class PlantsService {
     }));
   }
 
+  fetchCategories(categoryType: string) {
+    return this.apollo.watchQuery<[Category]>({
+      query: this.categoryQueries.getCategory(),
+      variables: { categoryType: categoryType },
+    }).valueChanges.pipe(map(result => {
+      const loadedCategoriesArray: Category[] = [];
+      const tempRes = result['data']['category']['data'];
+      console.log(tempRes);
+      for (const key in tempRes) {
+        loadedCategoriesArray.push({ ...tempRes[key] });
+      }
+      return loadedCategoriesArray;
+    }));
+  }
 
+  fetchPlantsUsingCategories(categoryType: string, id: number) {
+    return this.apollo.watchQuery<[Plant]>({
+      query: this.categoryQueries.getPlantsFromCategory(),
+      variables: {
+        categoryType: categoryType,
+        id: id
+      },
+    }).valueChanges.pipe(map(result => {
+      const loadedplantsArray: Plant[] = [];
+      const tempRes = result['data']['categoryPlants']['data'];
+      for (const key in tempRes) {
+        loadedplantsArray.push({ ...tempRes[key] });
+      }
+      this.plantsChanged.next(loadedplantsArray);
+      return loadedplantsArray;
+    }));
+  }
 
 }

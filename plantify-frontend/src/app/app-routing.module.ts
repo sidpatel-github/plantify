@@ -14,6 +14,7 @@ import { PlantsComponent } from './plants/plants.component';
 const routes: Routes = [
   { path: '', component: MainPageComponent },
   { path: 'plants', component: PlantsComponent },
+  { path: 'plants/:categotyType/:id', component: PlantsComponent },
   { path: 'category/:name', component: CategoryTilesComponent },
   { path: 'plant-detail/:id', component: PlantDetailsComponent },
   { path: 'cart', component: CartComponent },

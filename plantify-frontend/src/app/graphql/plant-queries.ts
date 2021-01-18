@@ -9,8 +9,8 @@ export class PlantQueries {
           query($page: Int!) {
             plants(page:$page) {
               data {
-                id
-                slug
+                id,
+                slug,
                 genus_id,
                 image_url,
                 common_name
@@ -25,8 +25,8 @@ export class PlantQueries {
           query($id: ID!) {
             plant(id:$id) {
               data {
-                id
-                slug
+                id,
+                slug,
                 genus_id,
                 image_url,
                 common_name,
